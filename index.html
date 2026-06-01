@@ -117,11 +117,9 @@
     }
     .nav-hamburger:hover { color: var(--white); background: var(--white-faint); }
     .nav-hamburger svg { display: block; width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
-    .nav-hamburger .bar-mid { transition: opacity 0.2s; }
-    .nav-hamburger.open .bar-top  { transform: translateY(6px) rotate(45deg); }
-    .nav-hamburger.open .bar-mid  { opacity: 0; }
-    .nav-hamburger.open .bar-bot  { transform: translateY(-6px) rotate(-45deg); }
-    .nav-hamburger .bar-top, .nav-hamburger .bar-bot { transition: transform 0.25s; }
+    .nav-hamburger .icon-close { display: none; }
+    .nav-hamburger.open .icon-open  { display: none; }
+    .nav-hamburger.open .icon-close { display: block; }
 
     /* ── Mobile menu ── */
     .mobile-menu {
@@ -148,8 +146,10 @@
       display: flex; align-items: center; gap: 12px;
       transition: background 0.15s, color 0.15s;
     }
-    .mobile-menu-inner a .m-dot {
-      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    .mobile-menu-inner a svg {
+      width: 18px; height: 18px; flex-shrink: 0;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
     }
     .mobile-menu-inner a.m-health  { color: var(--health-color); }
     .mobile-menu-inner a.m-wealth  { color: var(--wealth-color); }
@@ -200,6 +200,7 @@
     .pillar-section {
       padding: 64px 0;
       border-top: 1px solid var(--dark-border);
+      scroll-margin-top: 64px;
     }
 
     .pillar-header {
@@ -465,10 +466,16 @@
         </ul>
 
         <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
-          <svg viewBox="0 0 24 24">
-            <line class="bar-top" x1="3" y1="6"  x2="21" y2="6"/>
-            <line class="bar-mid" x1="3" y1="12" x2="21" y2="12"/>
-            <line class="bar-bot" x1="3" y1="18" x2="21" y2="18"/>
+          <!-- hamburger -->
+          <svg class="icon-open" viewBox="0 0 24 24">
+            <line x1="3" y1="6"  x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+          <!-- close -->
+          <svg class="icon-close" viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6"  y1="6" x2="18" y2="18"/>
           </svg>
         </button>
       </div>
@@ -478,10 +485,22 @@
   <!-- ── Mobile menu ── -->
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <div class="mobile-menu-inner">
-      <a href="#health"    class="m-health"    onclick="closeMenu()"><span class="m-dot" style="background:#ef4444"></span>Health</a>
-      <a href="#wealth"    class="m-wealth"    onclick="closeMenu()"><span class="m-dot" style="background:#4cae50"></span>Wealth</a>
-      <a href="#happiness" class="m-happiness" onclick="closeMenu()"><span class="m-dot" style="background:#f59e0b"></span>Happiness</a>
-      <a href="#wisdom"    class="m-wisdom"    onclick="closeMenu()"><span class="m-dot" style="background:#8b5cf6"></span>Wisdom</a>
+      <a href="#health"    class="m-health"    onclick="closeMenu()">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Health
+      </a>
+      <a href="#wealth"    class="m-wealth"    onclick="closeMenu()">
+        <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        Wealth
+      </a>
+      <a href="#happiness" class="m-happiness" onclick="closeMenu()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        Happiness
+      </a>
+      <a href="#wisdom"    class="m-wisdom"    onclick="closeMenu()">
+        <svg viewBox="0 0 24 24"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.44-4.16Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.44-4.16Z"/></svg>
+        Wisdom
+      </a>
     </div>
   </div>
 
@@ -608,7 +627,7 @@
           <a href="https://upzen.gumroad.com/l/the-happiness-optimiser" target="_blank" rel="noopener" class="product-card happiness">
             <div class="card-top">
               <span class="card-type happiness">Notion</span>
-              <span class="card-price free">Free</span>
+              <span class="card-price">$19</span>
             </div>
             <h3 class="card-title">The Happiness Optimiser</h3>
             <p class="card-desc">Tracks which activities actually make you happy, so you stop wasting time on the ones that don't. Scores, memories, and a scheduler — in Notion.</p>
@@ -627,7 +646,7 @@
       <div class="container">
         <div class="pillar-header">
           <div class="pillar-icon wisdom">
-            <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.44-4.16Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.44-4.16Z"/></svg>
           </div>
           <div>
             <h2 class="pillar-title wisdom">Wisdom</h2>
