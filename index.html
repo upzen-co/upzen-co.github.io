@@ -13,17 +13,26 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --green: #4cae50;
-      --green-dim: rgba(76, 174, 80, 0.72);
-      --green-glow: rgba(76, 174, 80, 0.15);
-      --green-faint: rgba(76, 174, 80, 0.06);
-      --dark: #1a1a1a;
-      --dark-surface: #212121;
-      --dark-card: #252525;
-      --dark-border: rgba(255,255,255,0.07);
-      --white: #ffffff;
-      --white-dim: rgba(255,255,255,0.55);
-      --white-faint: rgba(255,255,255,0.08);
+      --green:        #4cae50;
+      --green-dim:    rgba(76,174,80,0.72);
+      --green-glow:   rgba(76,174,80,0.15);
+      --green-faint:  rgba(76,174,80,0.06);
+      --dark:         #1a1a1a;
+      --dark-card:    #252525;
+      --dark-border:  rgba(255,255,255,0.07);
+      --white:        #ffffff;
+      --white-dim:    rgba(255,255,255,0.55);
+      --white-faint:  rgba(255,255,255,0.08);
+
+      /* pillar accent colours (subtle tints) */
+      --health-tint:    rgba(239,68,68,0.08);
+      --wealth-tint:    rgba(76,174,80,0.08);
+      --happiness-tint: rgba(251,191,36,0.08);
+      --wisdom-tint:    rgba(139,92,246,0.08);
+      --health-color:   #ef4444;
+      --wealth-color:   #4cae50;
+      --happiness-color:#f59e0b;
+      --wisdom-color:   #8b5cf6;
     }
 
     html { scroll-behavior: smooth; }
@@ -37,32 +46,24 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Noise texture overlay ── */
     body::before {
       content: '';
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.45;
+      pointer-events: none; z-index: 0; opacity: 0.45;
     }
 
-    /* ── Layout ── */
     .container {
       max-width: 1080px;
       margin: 0 auto;
       padding: 0 28px;
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
     }
 
     /* ── Nav ── */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(26, 26, 26, 0.85);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(26,26,26,0.88);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--dark-border);
@@ -73,247 +74,272 @@
       align-items: center;
       justify-content: space-between;
       height: 64px;
+      gap: 16px;
     }
 
     .nav-logo {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      flex-shrink: 0;
+      display: flex; align-items: center;
+      text-decoration: none; flex-shrink: 0;
     }
-
-    .nav-logo svg {
-      height: 28px;
-      width: auto;
-    }
+    .nav-logo svg { height: 28px; width: auto; }
 
     .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      list-style: none;
+      display: flex; align-items: center;
+      gap: 2px; list-style: none;
     }
 
     .nav-links a {
       color: var(--white-dim);
       text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 450;
+      font-size: 0.875rem; font-weight: 450;
       letter-spacing: 0.01em;
       padding: 6px 14px;
       border-radius: 8px;
       transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
     }
+    .nav-links a:hover { color: var(--white); background: var(--white-faint); }
 
-    .nav-links a:hover {
-      color: var(--white);
-      background: var(--white-faint);
+    /* pillar nav accent dots */
+    .nav-links .pill-health:hover  { color: var(--health-color); background: var(--health-tint); }
+    .nav-links .pill-wealth:hover  { color: var(--wealth-color); background: var(--wealth-tint); }
+    .nav-links .pill-happiness:hover { color: var(--happiness-color); background: var(--happiness-tint); }
+    .nav-links .pill-wisdom:hover  { color: var(--wisdom-color); background: var(--wisdom-tint); }
+
+    /* ── Hamburger ── */
+    .nav-hamburger {
+      display: none;
+      background: none; border: none; cursor: pointer;
+      padding: 8px; border-radius: 8px;
+      color: var(--white-dim);
+      transition: color 0.2s, background 0.2s;
+      flex-shrink: 0;
     }
+    .nav-hamburger:hover { color: var(--white); background: var(--white-faint); }
+    .nav-hamburger svg { display: block; width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .nav-hamburger .bar-mid { transition: opacity 0.2s; }
+    .nav-hamburger.open .bar-top  { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open .bar-mid  { opacity: 0; }
+    .nav-hamburger.open .bar-bot  { transform: translateY(-6px) rotate(-45deg); }
+    .nav-hamburger .bar-top, .nav-hamburger .bar-bot { transition: transform 0.25s; }
+
+    /* ── Mobile menu ── */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 64px; left: 0; right: 0;
+      background: rgba(22,22,22,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--dark-border);
+      z-index: 99;
+      padding: 0;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .mobile-menu.open { max-height: 320px; }
+    .mobile-menu-inner {
+      padding: 12px 20px 20px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .mobile-menu-inner a {
+      text-decoration: none;
+      font-size: 1rem; font-weight: 500;
+      padding: 12px 14px;
+      border-radius: 10px;
+      display: flex; align-items: center; gap: 12px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .mobile-menu-inner a .m-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .mobile-menu-inner a.m-health  { color: var(--health-color); }
+    .mobile-menu-inner a.m-wealth  { color: var(--wealth-color); }
+    .mobile-menu-inner a.m-happiness { color: var(--happiness-color); }
+    .mobile-menu-inner a.m-wisdom  { color: var(--wisdom-color); }
+    .mobile-menu-inner a:hover { background: var(--white-faint); }
 
     /* ── Hero ── */
-    .hero {
-      padding: 96px 0 80px;
-      position: relative;
-    }
-
-    /* Ambient glow behind hero */
+    .hero { padding: 96px 0 80px; position: relative; }
     .hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%;
+      content: ''; position: absolute; top: 0; left: 50%;
       transform: translateX(-50%);
-      width: 600px;
-      height: 400px;
+      width: 600px; height: 400px;
       background: radial-gradient(ellipse at center, rgba(76,174,80,0.08) 0%, transparent 70%);
       pointer-events: none;
     }
 
     .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 28px;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 28px;
     }
-
     .hero-eyebrow-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--green);
+      width: 6px; height: 6px; border-radius: 50%; background: var(--green);
       animation: pulse 2.4s ease-in-out infinite;
     }
-
     @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.45; transform: scale(0.85); }
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.45; transform:scale(.85); }
     }
 
     .hero-headline {
-      font-size: clamp(2.4rem, 6vw, 4.2rem);
-      font-weight: 700;
-      line-height: 1.06;
+      font-size: clamp(2.4rem,6vw,4.2rem);
+      font-weight: 700; line-height: 1.06;
       letter-spacing: -0.03em;
-      max-width: 720px;
-      margin-bottom: 24px;
+      max-width: 720px; margin-bottom: 24px;
     }
-
-    .hero-headline em {
-      font-style: normal;
-      color: var(--green);
-    }
+    .hero-headline em { font-style: normal; color: var(--green); }
 
     .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.15rem);
-      font-weight: 400;
-      color: var(--white-dim);
-      line-height: 1.65;
-      max-width: 520px;
-      margin-bottom: 48px;
+      font-size: clamp(1rem,2vw,1.15rem);
+      font-weight: 400; color: var(--white-dim);
+      line-height: 1.65; max-width: 520px; margin-bottom: 48px;
     }
 
-    /* ── Divider ── */
-    .section-divider {
-      border: none;
+    /* ── Pillar sections ── */
+    .pillar-section {
+      padding: 64px 0;
       border-top: 1px solid var(--dark-border);
-      margin: 0;
     }
 
-    /* ── Products ── */
-    .products-section {
-      padding: 72px 0 80px;
-    }
-
-    .section-label {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--white-dim);
+    .pillar-header {
+      display: flex; align-items: center; gap: 16px;
       margin-bottom: 36px;
     }
 
+    .pillar-icon {
+      width: 40px; height: 40px; border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .pillar-icon svg { width: 20px; height: 20px; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+
+    .pillar-icon.health     { background: var(--health-tint); }
+    .pillar-icon.health svg { stroke: var(--health-color); }
+    .pillar-icon.wealth     { background: var(--wealth-tint); }
+    .pillar-icon.wealth svg { stroke: var(--wealth-color); }
+    .pillar-icon.happiness     { background: var(--happiness-tint); }
+    .pillar-icon.happiness svg { stroke: var(--happiness-color); }
+    .pillar-icon.wisdom     { background: var(--wisdom-tint); }
+    .pillar-icon.wisdom svg { stroke: var(--wisdom-color); }
+
+    .pillar-title {
+      font-size: 1.5rem; font-weight: 650;
+      letter-spacing: -0.025em; line-height: 1;
+    }
+    .pillar-title.health     { color: var(--health-color); }
+    .pillar-title.wealth     { color: var(--wealth-color); }
+    .pillar-title.happiness  { color: var(--happiness-color); }
+    .pillar-title.wisdom     { color: var(--wisdom-color); }
+
+    .pillar-sub {
+      font-size: 0.82rem; color: var(--white-dim);
+      margin-top: 3px; letter-spacing: 0.01em;
+    }
+
+    /* ── Product grid ── */
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
     }
 
     .product-card {
       background: var(--dark-card);
       border: 1px solid var(--dark-border);
-      border-radius: 18px;
-      padding: 36px 32px;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      position: relative;
-      overflow: hidden;
+      border-radius: 16px;
+      padding: 28px 26px;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
       transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
       cursor: pointer;
     }
-
     .product-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 30% 0%, var(--green-faint) 0%, transparent 65%);
-      opacity: 0;
-      transition: opacity 0.3s;
+      content: ''; position: absolute; inset: 0;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .product-card.health::before  { background: radial-gradient(ellipse at 30% 0%, var(--health-tint) 0%, transparent 65%); }
+    .product-card.wealth::before  { background: radial-gradient(ellipse at 30% 0%, var(--wealth-tint) 0%, transparent 65%); }
+    .product-card.happiness::before { background: radial-gradient(ellipse at 30% 0%, var(--happiness-tint) 0%, transparent 65%); }
+    .product-card.wisdom::before  { background: radial-gradient(ellipse at 30% 0%, var(--wisdom-tint) 0%, transparent 65%); }
+
+    .product-card:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,0.3); }
+    .product-card.health:hover   { border-color: rgba(239,68,68,0.25); }
+    .product-card.wealth:hover   { border-color: rgba(76,174,80,0.25); }
+    .product-card.happiness:hover { border-color: rgba(251,191,36,0.25); }
+    .product-card.wisdom:hover   { border-color: rgba(139,92,246,0.25); }
+    .product-card:hover::before  { opacity: 1; }
+
+    .card-top {
+      display: flex; align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px; margin-bottom: 14px;
     }
 
-    .product-card:hover {
-      border-color: rgba(76, 174, 80, 0.3);
-      transform: translateY(-3px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(76,174,80,0.1);
+    .card-type {
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 5px;
     }
+    .card-type.health     { color: var(--health-color);     background: var(--health-tint); }
+    .card-type.wealth     { color: var(--wealth-color);     background: var(--wealth-tint); }
+    .card-type.happiness  { color: var(--happiness-color);  background: var(--happiness-tint); }
+    .card-type.wisdom     { color: var(--wisdom-color);     background: var(--wisdom-tint); }
 
-    .product-card:hover::before {
-      opacity: 1;
-    }
-
-    .card-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: var(--green-glow);
-      border: 1px solid rgba(76,174,80,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
+    .card-price {
+      font-size: 0.72rem; font-weight: 600;
+      color: var(--white-dim);
+      background: var(--white-faint);
+      padding: 3px 8px; border-radius: 5px;
+      letter-spacing: 0.02em;
       flex-shrink: 0;
     }
-
-    .card-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke: var(--green);
-      fill: none;
-      stroke-width: 1.75;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .card-tag {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 10px;
-    }
+    .card-price.free { color: var(--green); background: rgba(76,174,80,0.1); }
 
     .card-title {
-      font-size: 1.35rem;
-      font-weight: 650;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-      margin-bottom: 12px;
+      font-size: 1.1rem; font-weight: 650;
+      letter-spacing: -0.02em; line-height: 1.2;
+      margin-bottom: 8px;
     }
 
     .card-desc {
-      font-size: 0.9rem;
-      color: var(--white-dim);
-      line-height: 1.6;
-      margin-bottom: 28px;
-      flex: 1;
+      font-size: 0.875rem; color: var(--white-dim);
+      line-height: 1.6; margin-bottom: 22px; flex: 1;
     }
 
     .card-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--green);
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.82rem; font-weight: 600;
       letter-spacing: 0.01em;
       transition: gap 0.2s;
     }
+    .card-cta.health     { color: var(--health-color); }
+    .card-cta.wealth     { color: var(--wealth-color); }
+    .card-cta.happiness  { color: var(--happiness-color); }
+    .card-cta.wisdom     { color: var(--wisdom-color); }
 
-    .product-card:hover .card-cta {
-      gap: 12px;
-    }
+    .product-card:hover .card-cta { gap: 11px; }
 
     .card-cta svg {
-      width: 15px;
-      height: 15px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+      width: 14px; height: 14px;
+      stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
       transition: transform 0.2s;
     }
+    .product-card:hover .card-cta svg { transform: translateX(3px); }
 
-    .product-card:hover .card-cta svg {
-      transform: translateX(3px);
+    /* coming soon card */
+    .card-soon {
+      border-style: dashed;
+      opacity: 0.45;
+      pointer-events: none;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 130px;
+    }
+    .card-soon-label {
+      font-size: 0.8rem; color: var(--white-dim);
+      letter-spacing: 0.06em; text-transform: uppercase;
     }
 
     /* ── About strip ── */
@@ -321,109 +347,52 @@
       padding: 64px 0;
       border-top: 1px solid var(--dark-border);
     }
-
     .about-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
     }
-
     .about-heading {
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 650;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
+      font-size: clamp(1.4rem,3vw,2rem);
+      font-weight: 650; letter-spacing: -0.025em; line-height: 1.2;
     }
-
-    .about-heading em {
-      font-style: normal;
-      color: var(--green);
-    }
-
+    .about-heading em { font-style: normal; color: var(--green); }
     .about-body {
-      font-size: 0.95rem;
-      color: var(--white-dim);
-      line-height: 1.7;
+      font-size: 0.95rem; color: var(--white-dim); line-height: 1.7;
     }
 
     /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--dark-border);
-      padding: 36px 0;
-    }
+    footer { border-top: 1px solid var(--dark-border); padding: 36px 0; }
 
     .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px; flex-wrap: wrap;
     }
+    .footer-left { display: flex; align-items: center; gap: 12px; }
+    .footer-mark { display: block; width: 28px; height: 28px; flex-shrink: 0; }
 
-    .footer-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .footer-mark {
-      display: block;
-      width: 28px;
-      height: 28px;
-      flex-shrink: 0;
-    }
-
-    .upzen-mark-dark { display: none; }
+    .upzen-mark-dark  { display: none; }
     .upzen-mark-light { display: block; }
 
-    .footer-copy {
-      font-size: 0.8rem;
-      color: var(--white-dim);
-    }
+    .footer-copy { font-size: 0.8rem; color: var(--white-dim); }
 
     .footer-links {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      list-style: none;
+      display: flex; align-items: center; gap: 6px; list-style: none;
     }
-
     .footer-links a {
-      font-size: 0.8rem;
-      color: var(--white-dim);
-      text-decoration: none;
-      padding: 4px 10px;
-      border-radius: 6px;
+      font-size: 0.8rem; color: var(--white-dim);
+      text-decoration: none; padding: 4px 10px; border-radius: 6px;
+      display: flex; align-items: center; gap: 6px;
       transition: color 0.2s, background 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
+    .footer-links a:hover { color: var(--white); background: var(--white-faint); }
+    .footer-links svg { width: 15px; height: 15px; fill: currentColor; flex-shrink: 0; }
 
-    .footer-links a:hover {
-      color: var(--white);
-      background: var(--white-faint);
-    }
-
-    .footer-links svg {
-      width: 15px;
-      height: 15px;
-      fill: currentColor;
-      flex-shrink: 0;
-    }
-
-    /* ── Fade-in animation ── */
+    /* ── Animations ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
     }
-
-    .fade-up {
-      opacity: 0;
-      animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
+    .fade-up { opacity:0; animation: fadeUp 0.65s cubic-bezier(0.22,1,0.36,1) forwards; }
     .fade-up:nth-child(1) { animation-delay: 0.05s; }
     .fade-up:nth-child(2) { animation-delay: 0.15s; }
     .fade-up:nth-child(3) { animation-delay: 0.25s; }
@@ -432,46 +401,35 @@
     /* ── Light mode ── */
     @media (prefers-color-scheme: light) {
       :root {
-        --dark: #f7f7f5;
-        --dark-surface: #ffffff;
-        --dark-card: #ffffff;
+        --dark: #f7f7f5; --dark-card: #ffffff;
         --dark-border: rgba(0,0,0,0.08);
-        --white: #1a1a1a;
-        --white-dim: rgba(0,0,0,0.5);
+        --white: #1a1a1a; --white-dim: rgba(0,0,0,0.5);
         --white-faint: rgba(0,0,0,0.05);
         --green-faint: rgba(76,174,80,0.07);
         --green-glow: rgba(76,174,80,0.12);
+        --health-tint:    rgba(239,68,68,0.07);
+        --wealth-tint:    rgba(76,174,80,0.07);
+        --happiness-tint: rgba(251,191,36,0.09);
+        --wisdom-tint:    rgba(139,92,246,0.07);
       }
       body { background: #f7f7f5; }
       body::before { opacity: 0.2; }
-      nav { background: rgba(247,247,245,0.88); }
-      .hero::before { background: radial-gradient(ellipse at center, rgba(76,174,80,0.06) 0%, transparent 70%); }
-      .product-card { box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-      .product-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 0 0 1px rgba(76,174,80,0.15); }
+      nav { background: rgba(247,247,245,0.9); }
+      .mobile-menu { background: rgba(247,247,245,0.97); }
+      .product-card { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
       .upzen-mark-light { display: none; }
       .upzen-mark-dark  { display: block; }
     }
 
     /* ── Mobile ── */
-    @media (max-width: 680px) {
+    @media (max-width: 700px) {
       .nav-links { display: none; }
-
-      .hero { padding: 64px 0 56px; }
-
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .about-inner {
-        grid-template-columns: 1fr;
-        gap: 24px;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
+      .nav-hamburger { display: flex; align-items: center; justify-content: center; }
+      .mobile-menu { display: block; }
+      .hero { padding: 64px 0 52px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .about-inner { grid-template-columns: 1fr; gap: 24px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
     }
   </style>
 </head>
@@ -482,7 +440,6 @@
     <div class="container">
       <div class="nav-inner">
         <a href="/" class="nav-logo" aria-label="upzen home">
-          <!-- Light (white) logo for dark nav -->
           <svg viewBox="0 0 376 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <circle fill="#282828" cx="39.83" cy="39.83" r="39.83"/>
             <path fill="rgba(76,174,80,0.72)" d="m56.57,28.71h-22.16c-3.1,0-5.61-2.51-5.61-5.61s2.51-5.61,5.61-5.61h22.16c3.1,0,5.61,2.51,5.61,5.61s-2.51,5.61-5.61,5.61Z"/>
@@ -501,15 +458,36 @@
         </a>
 
         <ul class="nav-links">
-          <li><a href="/">Home</a></li>
-          <!-- Future nav items: <li><a href="/contact">Contact</a></li> -->
+          <li><a href="#health"    class="pill-health">Health</a></li>
+          <li><a href="#wealth"    class="pill-wealth">Wealth</a></li>
+          <li><a href="#happiness" class="pill-happiness">Happiness</a></li>
+          <li><a href="#wisdom"    class="pill-wisdom">Wisdom</a></li>
         </ul>
+
+        <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24">
+            <line class="bar-top" x1="3" y1="6"  x2="21" y2="6"/>
+            <line class="bar-mid" x1="3" y1="12" x2="21" y2="12"/>
+            <line class="bar-bot" x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
       </div>
     </div>
   </nav>
 
-  <!-- ── Hero ── -->
+  <!-- ── Mobile menu ── -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu-inner">
+      <a href="#health"    class="m-health"    onclick="closeMenu()"><span class="m-dot" style="background:#ef4444"></span>Health</a>
+      <a href="#wealth"    class="m-wealth"    onclick="closeMenu()"><span class="m-dot" style="background:#4cae50"></span>Wealth</a>
+      <a href="#happiness" class="m-happiness" onclick="closeMenu()"><span class="m-dot" style="background:#f59e0b"></span>Happiness</a>
+      <a href="#wisdom"    class="m-wisdom"    onclick="closeMenu()"><span class="m-dot" style="background:#8b5cf6"></span>Wisdom</a>
+    </div>
+  </div>
+
   <main>
+
+    <!-- ── Hero ── -->
     <section class="hero">
       <div class="container">
         <p class="hero-eyebrow fade-up">
@@ -525,49 +503,142 @@
       </div>
     </section>
 
-    <hr class="section-divider" />
-
-    <!-- ── Products ── -->
-    <section class="products-section">
+    <!-- ── Health ── -->
+    <section id="health" class="pillar-section">
       <div class="container">
-        <p class="section-label">Products</p>
+        <div class="pillar-header">
+          <div class="pillar-icon health">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div>
+            <h2 class="pillar-title health">Health</h2>
+            <p class="pillar-sub">Feel good, live longer.</p>
+          </div>
+        </div>
         <div class="products-grid">
 
-          <!-- Up Wealth Chart -->
-          <a href="/up-bank-wealth-chart/" class="product-card">
-            <div class="card-icon">
-              <!-- Line chart icon -->
-              <svg viewBox="0 0 24 24">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-              </svg>
+          <a href="https://upzen.gumroad.com/l/apple-watch-cheatsheet" target="_blank" rel="noopener" class="product-card health">
+            <div class="card-top">
+              <span class="card-type health">PDF</span>
+              <span class="card-price free">Free</span>
             </div>
-            <p class="card-tag">Tool</p>
-            <h2 class="card-title">Up Wealth Chart</h2>
+            <h3 class="card-title">Apple Watch Heart Health Cheatsheet</h3>
+            <p class="card-desc">17 Apple Watch metrics that reveal your cardiovascular risk — with target ranges, red zones, and what to do about each one.</p>
+            <span class="card-cta health">
+              Get it free
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Wealth ── -->
+    <section id="wealth" class="pillar-section">
+      <div class="container">
+        <div class="pillar-header">
+          <div class="pillar-icon wealth">
+            <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <div>
+            <h2 class="pillar-title wealth">Wealth</h2>
+            <p class="pillar-sub">Grow it, keep it, understand it.</p>
+          </div>
+        </div>
+        <div class="products-grid">
+
+          <a href="/up-bank-wealth-chart/" class="product-card wealth">
+            <div class="card-top">
+              <span class="card-type wealth">Tool</span>
+              <span class="card-price free">Free</span>
+            </div>
+            <h3 class="card-title">Up Bank Wealth Chart</h3>
             <p class="card-desc">One number, tracked over time. See the direction your wealth is moving — and keep it moving up.</p>
-            <span class="card-cta">
+            <span class="card-cta wealth">
               Open chart
               <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </span>
           </a>
 
-          <!-- Gumroad -->
-          <a href="https://upzen.gumroad.com" target="_blank" rel="noopener" class="product-card">
-            <div class="card-icon">
-              <!-- Shopping bag / product icon -->
-              <svg viewBox="0 0 24 24">
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <path d="M16 10a4 4 0 0 1-8 0"/>
-              </svg>
+          <a href="https://upzen.gumroad.com/l/freetrialtracker" target="_blank" rel="noopener" class="product-card wealth">
+            <div class="card-top">
+              <span class="card-type wealth">Notion</span>
+              <span class="card-price">$5</span>
             </div>
-            <p class="card-tag">Store</p>
-            <h2 class="card-title">upzen on Gumroad</h2>
-            <p class="card-desc">Guides, trackers, and resources across all four pillars. Buy once, use whenever you need them.</p>
-            <span class="card-cta">
-              Visit store
+            <h3 class="card-title">Free Trial Tracker</h3>
+            <p class="card-desc">Never get charged for a forgotten free trial again. Countdowns, calendar view, and cancellation reminders — all in Notion.</p>
+            <span class="card-cta wealth">
+              Get the template
               <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </span>
           </a>
+
+          <a href="https://upzen.gumroad.com/l/purchase-pal" target="_blank" rel="noopener" class="product-card wealth">
+            <div class="card-top">
+              <span class="card-type wealth">Shortcut</span>
+              <span class="card-price free">Free</span>
+            </div>
+            <h3 class="card-title">Purchase Pal</h3>
+            <p class="card-desc">An Apple Shortcut that asks you 10 smart questions before any purchase. Cuts impulse buys before they hit your bank account.</p>
+            <span class="card-cta wealth">
+              Get it free
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Happiness ── -->
+    <section id="happiness" class="pillar-section">
+      <div class="container">
+        <div class="pillar-header">
+          <div class="pillar-icon happiness">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          </div>
+          <div>
+            <h2 class="pillar-title happiness">Happiness</h2>
+            <p class="pillar-sub">More of what matters, less of what doesn't.</p>
+          </div>
+        </div>
+        <div class="products-grid">
+
+          <a href="https://upzen.gumroad.com/l/the-happiness-optimiser" target="_blank" rel="noopener" class="product-card happiness">
+            <div class="card-top">
+              <span class="card-type happiness">Notion</span>
+              <span class="card-price free">Free</span>
+            </div>
+            <h3 class="card-title">The Happiness Optimiser</h3>
+            <p class="card-desc">Tracks which activities actually make you happy, so you stop wasting time on the ones that don't. Scores, memories, and a scheduler — in Notion.</p>
+            <span class="card-cta happiness">
+              Get it free
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Wisdom ── -->
+    <section id="wisdom" class="pillar-section">
+      <div class="container">
+        <div class="pillar-header">
+          <div class="pillar-icon wisdom">
+            <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div>
+            <h2 class="pillar-title wisdom">Wisdom</h2>
+            <p class="pillar-sub">Keep learning, keep growing.</p>
+          </div>
+        </div>
+        <div class="products-grid">
+
+          <div class="product-card wisdom card-soon">
+            <span class="card-soon-label">Coming soon</span>
+          </div>
 
         </div>
       </div>
@@ -586,15 +657,14 @@
         </div>
       </div>
     </section>
+
   </main>
 
   <!-- ── Footer ── -->
   <footer>
     <div class="container">
       <div class="footer-inner">
-
         <div class="footer-left">
-          <!-- Light mark: white circle, for dark backgrounds -->
           <svg class="footer-mark upzen-mark-light" viewBox="0 0 79.67 79.67" xmlns="http://www.w3.org/2000/svg" aria-label="upzen">
             <circle fill="#fff" cx="39.83" cy="39.83" r="39.83"/>
             <path fill="rgba(76,174,80,0.72)" d="M56.57,28.71h-22.16c-3.1,0-5.61-2.51-5.61-5.61s2.51-5.61,5.61-5.61h22.16c3.1,0,5.61,2.51,5.61,5.61s-2.51,5.61-5.61,5.61Z"/>
@@ -602,7 +672,6 @@
             <path fill="rgba(76,174,80,0.72)" d="M23.1,62.18c-1.44,0-2.87-.55-3.97-1.64-2.19-2.19-2.19-5.74,0-7.93L52.6,19.14c2.19-2.19,5.74-2.19,7.93,0,2.19,2.19,2.19,5.74,0,7.93L27.07,60.53c-1.1,1.1-2.53,1.64-3.97,1.64Z"/>
             <path fill="rgba(76,174,80,0.72)" d="M56.57,50.87c-3.1,0-5.61-2.51-5.61-5.61V23.1c0-3.1,2.51-5.61,5.61-5.61s5.61,2.51,5.61,5.61v22.16c0,3.1-2.51,5.61-5.61,5.61Z"/>
           </svg>
-          <!-- Dark mark: dark circle, for light backgrounds -->
           <svg class="footer-mark upzen-mark-dark" viewBox="0 0 79.67 79.67" xmlns="http://www.w3.org/2000/svg" aria-label="upzen">
             <circle fill="#333" cx="39.83" cy="39.83" r="39.83"/>
             <path fill="rgba(76,174,80,0.72)" d="M56.57,28.71h-22.16c-3.1,0-5.61-2.51-5.61-5.61s2.51-5.61,5.61-5.61h22.16c3.1,0,5.61,2.51,5.61,5.61s-2.51,5.61-5.61,5.61Z"/>
@@ -612,23 +681,39 @@
           </svg>
           <span class="footer-copy">© upzen</span>
         </div>
-
         <ul class="footer-links">
           <li>
             <a href="https://github.com/upzen-co" target="_blank" rel="noopener" aria-label="upzen on GitHub">
-              <!-- GitHub mark -->
-              <svg viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/>
-              </svg>
+              <svg viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/></svg>
               GitHub
             </a>
           </li>
-          <li><a href="/">Home</a></li>
         </ul>
-
       </div>
     </div>
   </footer>
+
+  <script>
+    const btn  = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+      menu.setAttribute('aria-hidden', !open);
+    });
+    function closeMenu() {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', false);
+      menu.setAttribute('aria-hidden', true);
+    }
+    // close on outside click
+    document.addEventListener('click', e => {
+      if (!nav.contains(e.target) && !menu.contains(e.target)) closeMenu();
+    });
+    const nav = document.querySelector('nav');
+  </script>
 
 </body>
 </html>
