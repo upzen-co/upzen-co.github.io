@@ -100,28 +100,103 @@
     }
 
     .nav-logo {
-      display: flex; align-items: center; gap: 12px;
-      text-decoration: none; flex-shrink: 0; color: inherit;
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; flex-shrink: 0;
     }
-    .nav-logo .mark { width: 30px; height: 30px; display: block; }
-    .nav-logo .wordmark {
-      font-size: 1.05rem; font-weight: 650; letter-spacing: -0.02em;
+    .nav-logo svg { width: 34px; height: 34px; display: block; }
+
+    .nav-wordmark {
+      font-size: 15px; font-weight: 600; letter-spacing: -0.02em;
+      color: var(--white);
+      display: flex; align-items: center; gap: 6px;
     }
-    .nav-logo .byline {
-      font-size: 0.75rem; font-weight: 500; color: var(--white-dim);
-      padding-left: 10px; border-left: 1px solid var(--dark-border);
+    .nav-wordmark .wm-sep {
+      color: var(--white-dim); opacity: 0.45;
+      font-weight: 300; font-size: 18px; line-height: 1;
+    }
+    .nav-wordmark .wm-product {
+      font-weight: 400; color: var(--white-dim); font-size: 14px;
     }
 
-    .nav-cta {
-      font-size: 0.82rem; font-weight: 600;
-      color: var(--green);
-      background: var(--green-tint);
+    .nav-links {
+      margin-left: auto;
+      display: flex; align-items: center;
+      gap: 2px; list-style: none;
+    }
+    .nav-links a {
+      display: inline-flex; align-items: center;
+      color: var(--white-dim);
       text-decoration: none;
-      padding: 8px 16px; border-radius: 99px;
-      transition: background 0.2s;
+      font-size: 0.875rem; font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
       white-space: nowrap;
     }
-    .nav-cta:hover { background: rgba(76,174,80,0.18); }
+    .nav-links a:hover { color: var(--white); background: var(--white-faint); }
+    .nav-links a.active { color: var(--white); }
+    .nav-links a svg { width: 15px; height: 15px; fill: currentColor; display: block; }
+
+    .nav-cta {
+      display: inline-flex; align-items: center;
+      font-size: 13px; font-weight: 500; letter-spacing: -0.01em;
+      color: var(--green);
+      border: 1px solid rgba(76,174,80,0.25);
+      text-decoration: none;
+      padding: 7px 13px; border-radius: 8px;
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--green-tint); border-color: rgba(76,174,80,0.4); }
+
+    /* ── Hamburger ── */
+    .nav-hamburger {
+      display: none;
+      background: none; border: none; cursor: pointer;
+      padding: 8px; border-radius: 8px;
+      color: var(--white-dim);
+      transition: color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .nav-hamburger:hover { color: var(--white); background: var(--white-faint); }
+    .nav-hamburger svg { display: block; width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .nav-hamburger .icon-close { display: none; }
+    .nav-hamburger.open .icon-open  { display: none; }
+    .nav-hamburger.open .icon-close { display: block; }
+
+    /* ── Mobile menu ── */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 64px; left: 0; right: 0;
+      background: rgba(22,22,22,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--dark-border);
+      z-index: 99;
+      padding: 0;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .mobile-menu.open { max-height: 320px; }
+    .mobile-menu-inner {
+      padding: 12px 20px 20px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .mobile-menu-inner a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1rem; font-weight: 500;
+      padding: 12px 14px;
+      border-radius: 10px;
+      display: flex; align-items: center; gap: 12px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .mobile-menu-inner a svg {
+      width: 18px; height: 18px; flex-shrink: 0;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .mobile-menu-inner a.m-github svg { fill: currentColor; stroke: none; }
+    .mobile-menu-inner a:hover { background: var(--white-faint); }
 
     /* ── Hero ── */
     .hero { padding: 88px 0 72px; position: relative; }
@@ -432,6 +507,7 @@
       body { background: #f7f7f5; }
       body::before { opacity: 0.2; }
       nav { background: rgba(247,247,245,0.9); }
+      .mobile-menu { background: rgba(247,247,245,0.97); }
       .pillar-card, .notify-card { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
       .phone { box-shadow: 0 30px 80px rgba(0,0,0,0.25), inset 0 0 0 5px #000; border-color: rgba(0,0,0,0.2); }
       .upzen-mark-light { display: none; }
@@ -439,6 +515,14 @@
     }
 
     /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; align-items: center; justify-content: center; }
+      .mobile-menu { display: block; }
+    }
+    @media (max-width: 380px) {
+      .nav-wordmark .wm-sep, .nav-wordmark .wm-product { display: none; }
+    }
     @media (max-width: 860px) {
       .hero-inner { grid-template-columns: 1fr; gap: 48px; }
       .phone { margin: 0 auto; }
@@ -448,7 +532,6 @@
     @media (max-width: 560px) {
       .hero { padding: 56px 0 48px; }
       .features-grid { grid-template-columns: 1fr; }
-      .nav-logo .byline { display: none; }
       .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
     }
   </style>
@@ -459,20 +542,65 @@
   <nav>
     <div class="container">
       <div class="nav-inner">
-        <a href="/charts/" class="nav-logo" aria-label="Charts home">
-          <svg class="mark" viewBox="0 0 79.67 79.67" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect fill="#282828" x="0" y="0" width="79.67" height="79.67" rx="18"/>
-            <path fill="#4cae50" d="M22 20 v34 a4 4 0 0 0 4 4 h34" stroke="#4cae50" stroke-width="7" stroke-linecap="round" fill="none"/>
-            <polyline points="27 46 37 34 45 41 57 26" stroke="#4cae50" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <path fill="#4cae50" d="M59.5 22.5 l-1.8 9.2 -7.4 -7.4 z"/>
+        <a href="/" class="nav-logo" aria-label="upzen home">
+          <svg viewBox="0 0 79.67 79.67" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill="#4cae50" d="m56.57,28.71h-22.16c-3.1,0-5.61-2.51-5.61-5.61s2.51-5.61,5.61-5.61h22.16c3.1,0,5.61,2.51,5.61,5.61s-2.51,5.61-5.61,5.61Z"/>
+            <path fill="#4cae50" d="m45.26,62.18h-22.16c-3.1,0-5.61-2.51-5.61-5.61s2.51-5.61,5.61-5.61h22.16c3.1,0,5.61,2.51,5.61,5.61s-2.51,5.61-5.61,5.61Z"/>
+            <path fill="#4cae50" d="m23.1,62.18c-1.44,0-2.87-.55-3.97-1.64-2.19-2.19-2.19-5.74,0-7.93L52.6,19.14c2.19-2.19,5.74-2.19,7.93,0,2.19,2.19,2.19,5.74,0,7.93L27.07,60.53c-1.1,1.1-2.53,1.64-3.97,1.64Z"/>
+            <path fill="#4cae50" d="m56.57,50.87c-3.1,0-5.61-2.51-5.61-5.61v-22.16c0-3.1,2.51-5.61,5.61-5.61s5.61,2.51,5.61,5.61v22.16c0,3.1-2.51,5.61-5.61,5.61Z"/>
           </svg>
-          <span class="wordmark">Charts</span>
-          <span class="byline">by upzen</span>
+          <span class="nav-wordmark">upzen<span class="wm-sep">/</span><span class="wm-product">charts</span></span>
         </a>
+
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/charts/" class="active">Charts</a></li>
+          <li><a href="/up-bank-wealth-chart/">Wealth</a></li>
+          <li>
+            <a href="https://github.com/upzen-co" target="_blank" rel="noopener" aria-label="upzen on GitHub">
+              <svg viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/></svg>
+            </a>
+          </li>
+        </ul>
+
         <a class="nav-cta" href="mailto:charts@upzen.co?subject=Notify%20me%20when%20Charts%20launches&body=Hi%20James%20%E2%80%94%20let%20me%20know%20when%20Charts%20is%20on%20the%20App%20Store.">Get notified</a>
+
+        <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-open" viewBox="0 0 24 24">
+            <line x1="3" y1="6"  x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+          <svg class="icon-close" viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6"  y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
       </div>
     </div>
   </nav>
+
+  <!-- ── Mobile menu ── -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu-inner">
+      <a href="/">
+        <svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a href="/charts/" onclick="closeMenu()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Charts
+      </a>
+      <a href="/up-bank-wealth-chart/">
+        <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        Wealth
+      </a>
+      <a href="https://github.com/upzen-co" class="m-github" target="_blank" rel="noopener">
+        <svg viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
 
   <main>
 
@@ -775,6 +903,27 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    const nav  = document.querySelector('nav');
+    const btn  = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+      menu.setAttribute('aria-hidden', !open);
+    });
+    function closeMenu() {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', false);
+      menu.setAttribute('aria-hidden', true);
+    }
+    document.addEventListener('click', e => {
+      if (!nav.contains(e.target) && !menu.contains(e.target)) closeMenu();
+    });
+  </script>
 
 </body>
 </html>
