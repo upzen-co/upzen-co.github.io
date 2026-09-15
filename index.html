@@ -958,10 +958,11 @@
           headers: { 'Accept': 'application/json' },
           body: body
         })
-          .then(function (r) { return r.json().catch(function () { return {}; }); })
-          .then(function (res) {
+          .then(function (r) {
             setLoading(false);
-            if (res && (res.status === 'success' || res.status === 'quarantined')) {
+            // Any 2xx means Kit accepted the subscriber (schema varies by
+            // account / opt-in setting, so don't parse the body).
+            if (r.ok) {
               if (fields) fields.hidden = true;
               showMsg("You're on the list. Check your inbox to confirm your spot. 🎉", 'success');
             } else {
