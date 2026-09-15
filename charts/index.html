@@ -447,6 +447,55 @@
       margin-top: 16px; font-size: 0.75rem; color: var(--white-dim);
       position: relative;
     }
+    .notify-fine a { color: var(--white-dim); text-decoration: underline; text-underline-offset: 2px; }
+    .notify-fine a:hover { color: var(--white); }
+
+    /* ── Waitlist form ── */
+    .waitlist-form { max-width: 440px; margin: 0 auto; position: relative; }
+    .waitlist-fields { display: flex; gap: 10px; }
+    .waitlist-input {
+      flex: 1; min-width: 0;
+      font-family: inherit; font-size: 0.95rem;
+      color: var(--white); background: var(--dark);
+      border: 1px solid var(--dark-border);
+      border-radius: 10px; padding: 13px 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .waitlist-input::placeholder { color: var(--white-dim); }
+    .waitlist-input:focus {
+      outline: none; border-color: var(--green-dim);
+      box-shadow: 0 0 0 3px rgba(76,174,80,0.15);
+    }
+    .waitlist-btn {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: inherit; font-size: 0.95rem; font-weight: 600;
+      color: #fff; background: var(--green);
+      border: none; border-radius: 10px;
+      padding: 13px 22px; cursor: pointer; white-space: nowrap;
+      transition: background 0.2s, transform 0.1s, opacity 0.2s;
+    }
+    .waitlist-btn:hover { background: #43a047; }
+    .waitlist-btn:active { transform: translateY(1px); }
+    .waitlist-btn:disabled { opacity: 0.65; cursor: default; }
+    .btn-spinner {
+      display: none; width: 15px; height: 15px;
+      border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff;
+      border-radius: 50%; animation: spin 0.6s linear infinite;
+    }
+    .waitlist-form.loading .btn-spinner { display: inline-block; }
+    .waitlist-form.loading .btn-label { opacity: 0.8; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .waitlist-hp {
+      position: absolute !important; left: -9999px !important;
+      width: 1px; height: 1px; opacity: 0; pointer-events: none;
+    }
+    .waitlist-msg {
+      font-size: 0.88rem; line-height: 1.5; margin-top: 14px;
+      min-height: 1em; position: relative;
+    }
+    .waitlist-msg.error   { color: #ef4444; }
+    .waitlist-msg.success { color: var(--green); font-weight: 500; }
 
     /* ── Footer ── */
     footer { border-top: 1px solid var(--dark-border); padding: 36px 0; }
@@ -533,6 +582,8 @@
       .hero { padding: 56px 0 48px; }
       .features-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .waitlist-fields { flex-direction: column; }
+      .waitlist-btn { width: 100%; }
     }
   </style>
 </head>
@@ -563,7 +614,7 @@
           </li>
         </ul>
 
-        <a class="nav-cta" href="mailto:charts@upzen.co?subject=Notify%20me%20when%20Charts%20launches&body=Hi%20James%20%E2%80%94%20let%20me%20know%20when%20Charts%20is%20on%20the%20App%20Store.">Get notified</a>
+        <a class="nav-cta" href="#waitlist">Get notified</a>
 
         <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
           <svg class="icon-open" viewBox="0 0 24 24">
@@ -620,7 +671,7 @@
               Charts pulls in everything you track — <strong>Apple Health</strong>, <strong>CSV files</strong>, even <strong>live APIs</strong> — and turns it into beautiful, interactive charts. All of it on your device. None of it on a server.
             </p>
             <div class="hero-ctas fade-up">
-              <a class="btn-primary" href="mailto:charts@upzen.co?subject=Notify%20me%20when%20Charts%20launches&body=Hi%20James%20%E2%80%94%20let%20me%20know%20when%20Charts%20is%20on%20the%20App%20Store.">
+              <a class="btn-primary" href="#waitlist">
                 Get notified at launch
                 <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </a>
@@ -629,7 +680,7 @@
                 Coming soon to the App&nbsp;Store
               </span>
             </div>
-            <p class="hero-note fade-up">One email when it ships. No list to unsubscribe from, because there is no list software — it's literally just email.</p>
+            <p class="hero-note fade-up">One email when it ships. No spam, no noise — unsubscribe in one click, anytime.</p>
           </div>
 
           <!-- ── Device mock: the Summary grid ── -->
@@ -850,17 +901,31 @@
       </div>
     </section>
 
-    <!-- ── Notify band ── -->
-    <section class="notify">
+    <!-- ── Waitlist band ── -->
+    <section id="waitlist" class="notify">
       <div class="container">
         <div class="notify-card">
           <h2>Be first to chart everything</h2>
           <p>Charts is in the final stretch before launch. Leave your email and you'll get exactly one message when it lands on the App&nbsp;Store.</p>
-          <a class="btn-primary" href="mailto:charts@upzen.co?subject=Notify%20me%20when%20Charts%20launches&body=Hi%20James%20%E2%80%94%20let%20me%20know%20when%20Charts%20is%20on%20the%20App%20Store.">
-            Get notified at launch
-            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <p class="notify-fine">Opens your mail app — sends a note straight to the developer.</p>
+
+          <form id="waitlistForm" class="waitlist-form"
+                action="https://app.kit.com/forms/263da1dcba/subscriptions"
+                method="post" novalidate>
+            <div class="waitlist-fields">
+              <input type="email" name="email_address" id="waitlistEmail"
+                     class="waitlist-input" placeholder="you@example.com"
+                     required autocomplete="email" aria-label="Email address" />
+              <button type="submit" class="waitlist-btn">
+                <span class="btn-label">Notify me</span>
+                <span class="btn-spinner" aria-hidden="true"></span>
+              </button>
+            </div>
+            <!-- honeypot: real people never see or fill this -->
+            <input type="text" name="hp_website" class="waitlist-hp" tabindex="-1"
+                   autocomplete="off" aria-hidden="true" />
+            <p class="waitlist-msg" id="waitlistMsg" role="status" aria-live="polite"></p>
+            <p class="notify-fine">One email when it ships. Unsubscribe in one click — see our <a href="/privacy">privacy policy</a>.</p>
+          </form>
         </div>
       </div>
     </section>
@@ -923,6 +988,64 @@
     document.addEventListener('click', e => {
       if (!nav.contains(e.target) && !menu.contains(e.target)) closeMenu();
     });
+
+    // ── Waitlist form → Kit (ConvertKit) ──
+    (function () {
+      const form = document.getElementById('waitlistForm');
+      if (!form) return;
+      const fields  = form.querySelector('.waitlist-fields');
+      const emailEl = document.getElementById('waitlistEmail');
+      const msgEl   = document.getElementById('waitlistMsg');
+      const btn     = form.querySelector('.waitlist-btn');
+      const hp      = form.querySelector('.waitlist-hp');
+
+      function showMsg(text, type) {
+        msgEl.textContent = text;
+        msgEl.className = 'waitlist-msg' + (type ? ' ' + type : '');
+      }
+      function setLoading(on) {
+        btn.disabled = on;
+        form.classList.toggle('loading', on);
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Bot check: humans can't see the honeypot, so a filled value = bot.
+        if (hp && hp.value) return;
+
+        if (!emailEl.value || !emailEl.checkValidity()) {
+          showMsg('Please enter a valid email address.', 'error');
+          emailEl.focus();
+          return;
+        }
+
+        setLoading(true);
+        showMsg('', '');
+
+        const body = new FormData();
+        body.append('email_address', emailEl.value.trim());
+
+        fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: body
+        })
+          .then(function (r) { return r.json().catch(function () { return {}; }); })
+          .then(function (res) {
+            setLoading(false);
+            if (res && (res.status === 'success' || res.status === 'quarantined')) {
+              if (fields) fields.hidden = true;
+              showMsg("You're on the list. Check your inbox to confirm your spot. 🎉", 'success');
+            } else {
+              showMsg('Hmm, that didn’t go through. Please try again.', 'error');
+            }
+          })
+          .catch(function () {
+            setLoading(false);
+            showMsg('Network error — please check your connection and try again.', 'error');
+          });
+      });
+    })();
   </script>
 
 </body>
