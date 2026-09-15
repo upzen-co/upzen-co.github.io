@@ -1022,7 +1022,8 @@
         setLoading(true);
         showMsg('', '');
 
-        const body = new FormData();
+        // URL-encoded (not multipart) — Kit's endpoint parses this reliably.
+        const body = new URLSearchParams();
         body.append('email_address', emailEl.value.trim());
 
         fetch(form.action, {
@@ -1031,14 +1032,22 @@
           body: body
         })
           .then(function (r) {
+            return r.text().then(function (t) {
+              var data = null;
+              try { data = JSON.parse(t); } catch (e) {}
+              return { ok: r.ok, data: data };
+            });
+          })
+          .then(function (res) {
             setLoading(false);
-            // Any 2xx means Kit accepted the subscriber (schema varies by
-            // account / opt-in setting, so don't parse the body).
-            if (r.ok) {
+            var errored = res.data && (res.data.error || res.data.errors);
+            if (res.ok && !errored) {
               if (fields) fields.hidden = true;
               showMsg("You're on the list. Check your inbox to confirm your spot. 🎉", 'success');
             } else {
-              showMsg('Hmm, that didn’t go through. Please try again.', 'error');
+              var apiMsg = res.data && (res.data.message || res.data.error ||
+                (res.data.errors && res.data.errors[0]));
+              showMsg(apiMsg || 'Hmm, that didn’t go through. Please try again.', 'error');
             }
           })
           .catch(function () {
