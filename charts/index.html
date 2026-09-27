@@ -268,116 +268,20 @@
       font-size: 0.8rem; color: var(--white-dim);
     }
 
-    /* ── Phone mock ── */
+    /* ── Phone: real app screenshot ── */
     .phone {
-      width: 300px;
-      border-radius: 46px;
+      width: min(330px, 100%);
+      border-radius: 52px;
       background: #0d0d0d;
       border: 1px solid rgba(255,255,255,0.14);
       box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 0 0 5px #000;
-      padding: 14px;
+      padding: 11px;
       position: relative;
       flex-shrink: 0;
     }
-    .phone-notch {
-      position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
-      width: 88px; height: 24px; border-radius: 99px; background: #000;
-      z-index: 2;
-    }
-    .phone-screen {
-      border-radius: 34px;
-      background: #000;
-      overflow: hidden;
-      padding: 54px 14px 20px;
-    }
-
-    .phone-alert {
-      position: absolute; top: 54px; left: 22px; right: 22px; z-index: 3;
-      display: flex; gap: 9px; align-items: flex-start;
-      padding: 9px 11px;
-      border-radius: 18px;
-      background: rgba(44,44,46,0.96);
-      -webkit-backdrop-filter: blur(18px) saturate(1.6);
-      backdrop-filter: blur(18px) saturate(1.6);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-      color: #fff;
-    }
-    .alert-icon {
-      width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0;
-      background: var(--green);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .alert-icon svg { width: 15px; height: 15px; fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; }
-    .alert-body { min-width: 0; flex: 1; }
-    .alert-head {
-      display: flex; justify-content: space-between;
-      font-size: 0.56rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
-      color: rgba(255,255,255,0.5); margin-bottom: 1px;
-    }
-    .alert-title { font-size: 0.72rem; font-weight: 650; letter-spacing: -0.01em; }
-    .alert-text  { font-size: 0.66rem; line-height: 1.3; color: rgba(255,255,255,0.78); }
-
-    .screen-title {
-      font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em;
-      color: #fff; padding: 0 4px; margin-bottom: 2px;
-    }
-    .screen-date {
-      font-size: 0.68rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.06em; color: rgba(255,255,255,0.4);
-      padding: 0 4px; margin-bottom: 12px;
-    }
-
-    .screen-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-    }
-    .metric-card {
-      background: #1c1c1e;
-      border-radius: 14px;
-      padding: 10px 11px 9px;
-      min-width: 0;
-    }
-    .metric-card.wide { grid-column: 1 / -1; }
-
-    .metric-top {
-      display: flex; align-items: baseline; justify-content: space-between;
-      gap: 6px; margin-bottom: 1px;
-    }
-    .metric-name {
-      font-size: 0.66rem; font-weight: 600; letter-spacing: 0.01em;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .metric-src {
-      font-size: 0.5rem; font-weight: 700; letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.35);
-      background: rgba(255,255,255,0.07);
-      padding: 1.5px 5px; border-radius: 4px;
-      flex-shrink: 0;
-    }
-    .metric-value {
-      font-size: 0.98rem; font-weight: 700; letter-spacing: -0.02em;
-      color: #fff; margin-bottom: 7px;
-      font-variant-numeric: tabular-nums;
-    }
-    .metric-value small { font-size: 0.62rem; font-weight: 550; color: rgba(255,255,255,0.45); margin-left: 2px; }
-    .metric-card svg { display: block; width: 100%; height: auto; }
-
-    .c-hr     { color: var(--hr); }
-    .c-steps  { color: var(--steps); }
-    .c-weight { color: var(--weight); }
-    .c-teal   { color: var(--hrv); }
-    .c-green  { color: var(--green); }
-    .c-sleep  { color: var(--core); }
-
-    /* sleep stage legend */
-    .stage-legend {
-      display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap;
-    }
-    .stage-legend span {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 0.5rem; font-weight: 600; color: rgba(255,255,255,0.5);
-    }
-    .stage-legend i {
-      width: 6px; height: 6px; border-radius: 2px; display: inline-block;
+    .phone picture, .phone img {
+      display: block; width: 100%; height: auto;
+      border-radius: 39px;
     }
 
     /* ── Pillars ── */
@@ -568,12 +472,6 @@
       .fade-up:nth-child(3) { animation-delay: 0.25s; }
       .fade-up:nth-child(4) { animation-delay: 0.35s; }
       .phone.fade-up { animation-delay: 0.3s; }
-
-      @keyframes alertIn {
-        from { opacity:0; transform:translateY(-18px) scale(0.96); }
-        to   { opacity:1; transform:translateY(0) scale(1); }
-      }
-      .phone-alert { animation: alertIn 0.5s cubic-bezier(0.22,1,0.36,1) 1.3s both; }
     }
 
     /* ── Light mode ── */
@@ -715,135 +613,13 @@
             <p class="hero-note fade-up">One email when it ships. No spam, no noise — unsubscribe in one click, anytime.</p>
           </div>
 
-          <!-- ── Device mock: the Summary grid ── -->
-          <div class="phone fade-up" role="img" aria-label="iPhone showing the Charts Summary screen — mini charts for heart rate, steps, sleep stages, weight, coffee and savings — with a Charts alert arriving: resting heart rate is up 8 BPM on your usual.">
-            <div class="phone-notch"></div>
-            <div class="phone-alert" aria-hidden="true">
-              <div class="alert-icon">
-                <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-              </div>
-              <div class="alert-body">
-                <div class="alert-head"><span>Charts</span><span>now</span></div>
-                <div class="alert-title">Resting heart rate is up</div>
-                <div class="alert-text">62 BPM — 8 above your usual this week.</div>
-              </div>
-            </div>
-            <div class="phone-screen">
-              <div class="screen-title">Summary</div>
-              <div class="screen-date">Saturday 12 July</div>
-              <div class="screen-grid">
-
-                <div class="metric-card">
-                  <div class="metric-top">
-                    <span class="metric-name c-hr">Heart Rate</span>
-                  </div>
-                  <div class="metric-value">62<small>BPM</small></div>
-                  <svg viewBox="0 0 120 34" aria-hidden="true">
-                    <defs>
-                      <linearGradient id="ghr" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0" stop-color="#FF2D55" stop-opacity="0.25"/>
-                        <stop offset="1" stop-color="#FF2D55" stop-opacity="0"/>
-                      </linearGradient>
-                    </defs>
-                    <path d="M2 24 L14 20 L26 26 L38 14 L50 18 L62 8 L74 15 L86 10 L98 16 L110 6 L118 10 V34 H2 Z" fill="url(#ghr)"/>
-                    <path d="M2 24 L14 20 L26 26 L38 14 L50 18 L62 8 L74 15 L86 10 L98 16 L110 6 L118 10" fill="none" stroke="#FF2D55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="118" cy="10" r="3" fill="#FF2D55" stroke="#1c1c1e" stroke-width="2"/>
-                  </svg>
-                </div>
-
-                <div class="metric-card">
-                  <div class="metric-top">
-                    <span class="metric-name c-steps">Steps</span>
-                  </div>
-                  <div class="metric-value">9,432</div>
-                  <svg viewBox="0 0 120 34" aria-hidden="true">
-                    <g fill="#FF9500">
-                      <rect x="3"   y="20" width="10" height="14" rx="2"/>
-                      <rect x="18"  y="14" width="10" height="20" rx="2"/>
-                      <rect x="33"  y="23" width="10" height="11" rx="2"/>
-                      <rect x="48"  y="9"  width="10" height="25" rx="2"/>
-                      <rect x="63"  y="16" width="10" height="18" rx="2"/>
-                      <rect x="78"  y="12" width="10" height="22" rx="2"/>
-                      <rect x="93"  y="19" width="10" height="15" rx="2"/>
-                      <rect x="108" y="4"  width="10" height="30" rx="2"/>
-                    </g>
-                  </svg>
-                </div>
-
-                <div class="metric-card wide">
-                  <div class="metric-top">
-                    <span class="metric-name c-sleep">Sleep</span>
-                  </div>
-                  <div class="metric-value">7<small>hr</small> 42<small>min</small></div>
-                  <svg viewBox="0 0 252 12" aria-hidden="true">
-                    <rect x="0"     y="1" width="14"  height="10" rx="3" fill="#FF7E67"/>
-                    <rect x="16"    y="1" width="52"  height="10" rx="3" fill="#0088FF"/>
-                    <rect x="70"    y="1" width="34"  height="10" rx="3" fill="#3634A3"/>
-                    <rect x="106"   y="1" width="42"  height="10" rx="3" fill="#0088FF"/>
-                    <rect x="150"   y="1" width="30"  height="10" rx="3" fill="#00C0E8"/>
-                    <rect x="182"   y="1" width="38"  height="10" rx="3" fill="#0088FF"/>
-                    <rect x="222"   y="1" width="30"  height="10" rx="3" fill="#00C0E8"/>
-                  </svg>
-                  <div class="stage-legend" aria-hidden="true">
-                    <span><i style="background:#FF7E67"></i>Awake</span>
-                    <span><i style="background:#00C0E8"></i>REM</span>
-                    <span><i style="background:#0088FF"></i>Core</span>
-                    <span><i style="background:#3634A3"></i>Deep</span>
-                  </div>
-                </div>
-
-                <div class="metric-card">
-                  <div class="metric-top">
-                    <span class="metric-name c-weight">Weight</span>
-                  </div>
-                  <div class="metric-value">74.2<small>kg</small></div>
-                  <svg viewBox="0 0 120 34" aria-hidden="true">
-                    <path d="M2 8 L20 11 L38 10 L56 15 L74 14 L92 19 L110 18 L118 21" fill="none" stroke="#AF52DE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="118" cy="21" r="3" fill="#AF52DE" stroke="#1c1c1e" stroke-width="2"/>
-                  </svg>
-                </div>
-
-                <div class="metric-card">
-                  <div class="metric-top">
-                    <span class="metric-name c-teal">Coffee</span>
-                    <span class="metric-src">CSV</span>
-                  </div>
-                  <div class="metric-value">3<small>cups</small></div>
-                  <svg viewBox="0 0 120 34" aria-hidden="true">
-                    <g fill="#30B0C7">
-                      <rect x="3"   y="14" width="10" height="20" rx="2"/>
-                      <rect x="18"  y="21" width="10" height="13" rx="2"/>
-                      <rect x="33"  y="14" width="10" height="20" rx="2"/>
-                      <rect x="48"  y="27" width="10" height="7"  rx="2"/>
-                      <rect x="63"  y="21" width="10" height="13" rx="2"/>
-                      <rect x="78"  y="8"  width="10" height="26" rx="2"/>
-                      <rect x="93"  y="14" width="10" height="20" rx="2"/>
-                      <rect x="108" y="21" width="10" height="13" rx="2"/>
-                    </g>
-                  </svg>
-                </div>
-
-                <div class="metric-card wide">
-                  <div class="metric-top">
-                    <span class="metric-name c-green">Savings</span>
-                    <span class="metric-src">API</span>
-                  </div>
-                  <div class="metric-value">$12,840</div>
-                  <svg viewBox="0 0 252 30" aria-hidden="true">
-                    <defs>
-                      <linearGradient id="gsv" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0" stop-color="#4cae50" stop-opacity="0.25"/>
-                        <stop offset="1" stop-color="#4cae50" stop-opacity="0"/>
-                      </linearGradient>
-                    </defs>
-                    <path d="M2 26 L30 24 L58 25 L86 19 L114 20 L142 14 L170 15 L198 9 L226 10 L250 4 V30 H2 Z" fill="url(#gsv)"/>
-                    <path d="M2 26 L30 24 L58 25 L86 19 L114 20 L142 14 L170 15 L198 9 L226 10 L250 4" fill="none" stroke="#4cae50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="250" cy="4" r="3" fill="#4cae50" stroke="#1c1c1e" stroke-width="2"/>
-                  </svg>
-                </div>
-
-              </div>
-            </div>
+          <!-- ── Real screenshot: seeded Summary on iPhone 17 Pro sim (task/338 --seed-marketing) ── -->
+          <div class="phone fade-up">
+            <picture>
+              <source srcset="/assets/charts/summary-light.png" media="(prefers-color-scheme: light)" />
+              <img src="/assets/charts/summary-dark.png" width="816" height="1774"
+                   alt="Charts on iPhone: the Summary screen grouped into Heart, Sleep and Activity sections, with a notification arriving — Heart Rate Variability is lower than usual, 37 ms today, 10 below the 30-day average." />
+            </picture>
           </div>
         </div>
       </div>
