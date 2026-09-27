@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-  <title>Charts — the Health app, but for everything · upzen</title>
-  <meta name="description" content="Charts turns anything you track — Apple Health, CSV files, live APIs — into beautiful, interactive native charts. Private by design. Coming soon to iPhone and Mac." />
+  <title>Charts — choose what matters, know when it changes · upzen</title>
+  <meta name="description" content="Charts is the chart app for the health data you care about. Choose your metrics, monitor them at a glance, and get real-time alerts the moment any of them changes. Private by design. Coming soon to iPhone and Mac." />
   <link rel="canonical" href="https://upzen.co/charts/" />
 
   <!-- Favicon -->
@@ -17,8 +17,8 @@
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://upzen.co/charts/" />
-  <meta property="og:title"       content="Charts — the Health app, but for everything" />
-  <meta property="og:description" content="Anything you track — Apple Health, CSV files, live APIs — as beautiful, interactive native charts. Private by design. Coming soon to iPhone and Mac." />
+  <meta property="og:title"       content="Charts — choose what matters, know when it changes" />
+  <meta property="og:description" content="Choose the health data you care about, monitor it at a glance, and get real-time alerts the moment any of it changes. Private by design. Coming soon to iPhone and Mac." />
   <meta property="og:image"       content="https://upzen.co/assets/og-image.png" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
@@ -26,8 +26,8 @@
 
   <!-- Twitter / X -->
   <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content="Charts — the Health app, but for everything" />
-  <meta name="twitter:description" content="Anything you track — Apple Health, CSV files, live APIs — as beautiful, interactive native charts. Private by design. Coming soon to iPhone and Mac." />
+  <meta name="twitter:title"       content="Charts — choose what matters, know when it changes" />
+  <meta name="twitter:description" content="Choose the health data you care about, monitor it at a glance, and get real-time alerts the moment any of it changes. Private by design. Coming soon to iPhone and Mac." />
   <meta name="twitter:image"       content="https://upzen.co/assets/og-image.png" />
 
   <style>
@@ -291,6 +291,32 @@
       padding: 54px 14px 20px;
     }
 
+    .phone-alert {
+      position: absolute; top: 54px; left: 22px; right: 22px; z-index: 3;
+      display: flex; gap: 9px; align-items: flex-start;
+      padding: 9px 11px;
+      border-radius: 18px;
+      background: rgba(44,44,46,0.96);
+      -webkit-backdrop-filter: blur(18px) saturate(1.6);
+      backdrop-filter: blur(18px) saturate(1.6);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+      color: #fff;
+    }
+    .alert-icon {
+      width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .alert-icon svg { width: 15px; height: 15px; fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; }
+    .alert-body { min-width: 0; flex: 1; }
+    .alert-head {
+      display: flex; justify-content: space-between;
+      font-size: 0.56rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5); margin-bottom: 1px;
+    }
+    .alert-title { font-size: 0.72rem; font-weight: 650; letter-spacing: -0.01em; }
+    .alert-text  { font-size: 0.66rem; line-height: 1.3; color: rgba(255,255,255,0.78); }
+
     .screen-title {
       font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em;
       color: #fff; padding: 0 4px; margin-bottom: 2px;
@@ -542,6 +568,12 @@
       .fade-up:nth-child(3) { animation-delay: 0.25s; }
       .fade-up:nth-child(4) { animation-delay: 0.35s; }
       .phone.fade-up { animation-delay: 0.3s; }
+
+      @keyframes alertIn {
+        from { opacity:0; transform:translateY(-18px) scale(0.96); }
+        to   { opacity:1; transform:translateY(0) scale(1); }
+      }
+      .phone-alert { animation: alertIn 0.5s cubic-bezier(0.22,1,0.36,1) 1.3s both; }
     }
 
     /* ── Light mode ── */
@@ -665,10 +697,10 @@
               Coming soon · iPhone &amp; Mac
             </p>
             <h1 class="hero-headline fade-up">
-              The Health app,<br/>but for <em>everything.</em>
+              Choose what matters.<br/>Know when it <em>changes.</em>
             </h1>
             <p class="hero-sub fade-up">
-              Charts pulls in everything you track — <strong>Apple Health</strong>, <strong>CSV files</strong>, even <strong>live APIs</strong> — and turns it into beautiful, interactive charts. All of it on your device. None of it on a server.
+              Charts is a chart app for the health data you actually care about. <strong>Pick your metrics</strong>, <strong>see them all at a glance</strong>, and <strong>get a real-time alert</strong> the moment any of them changes. All of it on your device. None of it on a server.
             </p>
             <div class="hero-ctas fade-up">
               <a class="btn-primary" href="#waitlist">
@@ -684,8 +716,18 @@
           </div>
 
           <!-- ── Device mock: the Summary grid ── -->
-          <div class="phone fade-up" role="img" aria-label="iPhone showing the Charts Summary screen: a grid of mini charts for heart rate, steps, sleep stages, weight, coffee logged from a CSV file, and savings from a live API.">
+          <div class="phone fade-up" role="img" aria-label="iPhone showing the Charts Summary screen — mini charts for heart rate, steps, sleep stages, weight, coffee and savings — with a Charts alert arriving: resting heart rate is up 8 BPM on your usual.">
             <div class="phone-notch"></div>
+            <div class="phone-alert" aria-hidden="true">
+              <div class="alert-icon">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+              <div class="alert-body">
+                <div class="alert-head"><span>Charts</span><span>now</span></div>
+                <div class="alert-title">Resting heart rate is up</div>
+                <div class="alert-text">62 BPM — 8 above your usual this week.</div>
+              </div>
+            </div>
             <div class="phone-screen">
               <div class="screen-title">Summary</div>
               <div class="screen-date">Saturday 12 July</div>
@@ -810,32 +852,32 @@
     <!-- ── Pillars ── -->
     <section class="pillars">
       <div class="container">
-        <h2 class="section-heading">Made for people<br/>who <em>track things.</em></h2>
-        <p class="section-sub">Your steps live in one app, your spreadsheets in another, your bank balance in a third. Charts puts every number you care about on one screen.</p>
+        <h2 class="section-heading">Pick it once.<br/>Then it <em>watches for you.</em></h2>
+        <p class="section-sub">Health apps show you everything, so you end up watching nothing. Charts starts with the handful of numbers that matter to you — and keeps an eye on them so you don't have to.</p>
         <div class="pillars-grid">
 
           <div class="pillar-card">
             <div class="pillar-card-icon">
               <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
             </div>
-            <h3>Everything in one place</h3>
-            <p>Apple Health metrics, CSV and TSV files, and live REST APIs — side by side on one dashboard. Overlay any two series and see how they move together.</p>
+            <h3>Choose what matters</h3>
+            <p>Pick the metrics you care about from hundreds in Apple Health — resting heart rate, sleep, HRV, weight — or add your own from a file or a live API. Nothing else clutters the screen.</p>
           </div>
 
           <div class="pillar-card">
             <div class="pillar-card-icon">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </div>
-            <h3>Actually private</h3>
-            <p>No servers, no accounts, no analytics — there isn't even a sign-up screen. Your data stays on your device, full stop. This page has no trackers either.</p>
+            <h3>See it at a glance</h3>
+            <p>Everything you chose lives on one Summary screen and in Home Screen widgets. One look tells you where things stand — no digging through tabs.</p>
           </div>
 
           <div class="pillar-card">
             <div class="pillar-card-icon">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
             </div>
-            <h3>Feels native</h3>
-            <p>Pure Swift and Swift Charts, built for iOS 26 and macOS 26. Interactive scrubbing, widgets, haptics, dark mode — it feels like Apple made it.</p>
+            <h3>Know the moment it changes</h3>
+            <p>Charts watches your data in the background and tells you as soon as something shifts — a goal slipping behind pace, an unusual reading, a trend worth knowing about.</p>
           </div>
 
         </div>
@@ -846,30 +888,30 @@
     <section class="features">
       <div class="container">
         <h2 class="section-heading">Everything you'd expect.<br/>A few things you <em>wouldn't.</em></h2>
-        <p class="section-sub">Built by one person who wanted this app to exist — and kept going.</p>
+        <p class="section-sub">Built by one person who wanted to stop checking five apps a day — and kept going.</p>
         <div class="features-grid">
 
           <div class="feature">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             <div>
               <h4>Deep Apple Health support</h4>
-              <p>Heart, activity, sleep stages, breathing, body measurements — hundreds of metrics, charted the way Health should have.</p>
+              <p>Heart, activity, sleep stages, breathing, body measurements — hundreds of metrics to choose from, charted the way Health should have.</p>
             </div>
           </div>
 
           <div class="feature">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
             <div>
-              <h4>Import any file</h4>
-              <p>Drop in a CSV or TSV — supplements, workouts, finances, anything with a date column becomes a chart.</p>
+              <h4>Alerts on your terms</h4>
+              <p>Set goals on any metric and choose how chatty Charts is — Quiet, Balanced or Frequent. It never sends more than you asked for.</p>
             </div>
           </div>
 
           <div class="feature">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             <div>
-              <h4>Live API sources</h4>
-              <p>Point Charts at a REST endpoint and it keeps itself up to date — bank balances, home sensors, whatever you run.</p>
+              <h4>Bring your own data</h4>
+              <p>Drop in a CSV or point Charts at a live API — supplements, finances, home sensors. Charted and watched just like your Health data.</p>
             </div>
           </div>
 
@@ -877,7 +919,7 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="12"/></svg>
             <div>
               <h4>Home Screen widgets</h4>
-              <p>Any metric, any range, as a glanceable widget — small, medium, or large.</p>
+              <p>Monitor without even opening the app — any metric, any range, small, medium, or large.</p>
             </div>
           </div>
 
@@ -890,10 +932,10 @@
           </div>
 
           <div class="feature">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             <div>
-              <h4>On the Mac too</h4>
-              <p>The same app, native on macOS — your whole dashboard on a big screen.</p>
+              <h4>Actually private</h4>
+              <p>No servers, no accounts, no analytics. Your data and your alerts are worked out on your device. This page has no trackers either.</p>
             </div>
           </div>
 
@@ -905,8 +947,8 @@
     <section id="waitlist" class="notify">
       <div class="container">
         <div class="notify-card">
-          <h2>Be first to chart everything</h2>
-          <p>Charts is in the final stretch before launch. Leave your email and you'll get exactly one message when it lands on the App&nbsp;Store.</p>
+          <h2>Be the first to know</h2>
+          <p>Charts is in the final stretch before launch. Leave your email and you'll get exactly one alert from us: the day it lands on the App&nbsp;Store.</p>
 
           <form id="waitlistForm" class="waitlist-form"
                 action="https://app.kit.com/forms/9920214/subscriptions"
