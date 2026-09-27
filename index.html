@@ -203,21 +203,6 @@
       pointer-events: none;
     }
 
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.75rem; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--green); margin-bottom: 28px;
-    }
-    .hero-eyebrow-dot {
-      width: 6px; height: 6px; border-radius: 50%; background: var(--green);
-      animation: pulse 2.4s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity:1; transform:scale(1); }
-      50%      { opacity:.45; transform:scale(.85); }
-    }
-
     .hero-headline {
       font-size: clamp(2.4rem,6vw,4.2rem);
       font-weight: 700; line-height: 1.06;
@@ -452,13 +437,6 @@
     }
     .waitlist-card > * { position: relative; z-index: 1; }
 
-    .waitlist-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.72rem; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--green); margin-bottom: 18px;
-    }
-
     .waitlist-title {
       font-size: clamp(1.5rem, 3.5vw, 2.05rem);
       font-weight: 700; letter-spacing: -0.025em; line-height: 1.15;
@@ -640,10 +618,6 @@
     <!-- ── Hero ── -->
     <section class="hero">
       <div class="container">
-        <p class="hero-eyebrow fade-up">
-          <span class="hero-eyebrow-dot"></span>
-          Tools for better living
-        </p>
         <h1 class="hero-headline fade-up">
           A better life is closer<br/>than you <em>think.</em>
         </h1>
@@ -657,10 +631,6 @@
     <section id="waitlist" class="waitlist">
       <div class="container">
         <div class="waitlist-card fade-up">
-          <p class="waitlist-eyebrow">
-            <span class="hero-eyebrow-dot"></span>
-            Join the waitlist
-          </p>
           <h2 class="waitlist-title">Be first when the next tool <em>drops.</em></h2>
           <p class="waitlist-sub">
             One short email when something worth your time is ready. No spam, no noise — unsubscribe in one click, anytime.

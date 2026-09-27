@@ -213,16 +213,6 @@
       gap: 56px; align-items: center;
     }
 
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.75rem; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--green); margin-bottom: 26px;
-    }
-    .hero-eyebrow-dot {
-      width: 6px; height: 6px; border-radius: 50%; background: var(--green);
-    }
-
     .hero-headline {
       font-size: clamp(2.4rem,5.4vw,3.9rem);
       font-weight: 700; line-height: 1.06;
@@ -456,11 +446,6 @@
 
     /* ── Animations ── */
     @media (prefers-reduced-motion: no-preference) {
-      @keyframes pulse {
-        0%,100% { opacity:1; transform:scale(1); }
-        50%      { opacity:.45; transform:scale(.85); }
-      }
-      .hero-eyebrow-dot { animation: pulse 2.4s ease-in-out infinite; }
 
       @keyframes fadeUp {
         from { opacity:0; transform:translateY(22px); }
@@ -590,10 +575,6 @@
       <div class="container">
         <div class="hero-inner">
           <div>
-            <p class="hero-eyebrow fade-up">
-              <span class="hero-eyebrow-dot"></span>
-              Coming soon · iPhone &amp; Mac
-            </p>
             <h1 class="hero-headline fade-up">
               Choose what matters.<br/>Know when it <em>changes.</em>
             </h1>
@@ -618,7 +599,7 @@
             <picture>
               <source srcset="/assets/charts/summary-light.png" media="(prefers-color-scheme: light)" />
               <img src="/assets/charts/summary-dark.png" width="816" height="1774"
-                   alt="Charts on iPhone: the Summary screen grouped into Heart, Sleep and Activity sections, with a notification arriving — Heart Rate Variability is unusually high today, 70 ms, higher than on 30 of the last 30 days." />
+                   alt="Charts on iPhone: the Summary screen grouped into Heart, Sleep and Activity sections, with a notification arriving — Heart Rate Variability, unusually high today: 70 ms, higher than on 30 of the last 30 days." />
             </picture>
           </div>
         </div>
