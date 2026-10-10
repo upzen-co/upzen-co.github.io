@@ -1,1 +1,5 @@
-<!doctype html><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><script>var u=new URLSearchParams(location.search).get('u')||'';if(/^https:\/\/(x|twitter)\.com\/\S*$/.test(u))location.replace(u);</script>
+<!doctype html><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><script>
+var q=new URLSearchParams(location.search),u=q.get('u')||'',i=q.get('i'),t=q.get('t');
+if(i){try{var p=i.replace(/-/g,'+').replace(/_/g,'/'),b=p+'='.repeat((4-p.length%4)%4),d=atob(b);if(/^\d{5,25}$/.test(d))u='https://x.com/intent/post?in_reply_to='+d+(t?'&text='+encodeURIComponent(t):'');}catch(e){}}
+if(/^https:\/\/(x|twitter)\.com\/\S*$/.test(u))location.replace(u);
+</script>
